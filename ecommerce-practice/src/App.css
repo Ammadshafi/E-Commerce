@@ -1,0 +1,27 @@
+.header {
+  background-image: url(../images/glenn-carstens-peters-loaTW2AfDYU-unsplash.jpg);
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-transform: uppercase;
+  padding: 170px;
+  text-align: start;
+  color: white;
+}
+.header p {
+  font-size: 20px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cards:hover {
+  box-shadow: 5px 5px 5px 5px rgb(211, 194, 194);
+  transform: scale(103%);
+  transition: 0s;
+}
+a {
+  text-decoration: none !important;
+  color: black !important;
+}
