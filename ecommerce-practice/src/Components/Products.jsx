@@ -1,56 +1,55 @@
-import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import "../App.css";
 import { GlobalContext } from "../App";
+import {  categoryData, productData } from "../Services/ProductApi";
 
-let loading = true;
+
 const Products = () => {
   const [data, setData] = useState([]);
   const { AddBasket } = useContext(GlobalContext);
   const [category, setCategary] = useState([]);
   const [filcat, setfilcat] = useState("");
+  const [loading,setLoading]=useState(true)
   useEffect(() => {
-    const Api = async () => {
-      const Response = await axios.get(
-        `https://fakestoreapi.com/products/${filcat}`
-      );
-      setData(Response.data);
-      const rescategary = await axios.get(
-        "https://fakestoreapi.com/products/categories"
-      );
-      const category = await rescategary.data;
-      setCategary(category);
-    };
-    loading = false;
-    Api();
+    const categaryApi  =async()=>{
+      const data=await categoryData()
+      setCategary(data)
+    }
+    const productApi=async()=>{
+      const data=await productData(filcat)
+      setData(data)
+      setLoading(false)
+    }
+    categaryApi()
+    productApi()
   }, [filcat]);
 
-  if (loading === false) {
-    return (
-      <div>
+  return (
+    <div>
         <div className="card-list container my-4 text-center">
           <button
             className="btn btn-outline-dark mx-2 my-2"
             style={{ textTransform: "uppercase" }}
             onClick={() => setfilcat("")}
-          >
+            >
             All
           </button>
           {category.map((cur) => (
             <button
-              key={cur}
-              className="btn btn-outline-dark mx-2"
-              style={{ textTransform: "uppercase" }}
-              onClick={() => setfilcat("category/" + cur)}
+            key={cur}
+            className="btn btn-outline-dark mx-2"
+            style={{ textTransform: "uppercase" }}
+            onClick={() => setfilcat("category/" + cur)}
             >
               {cur}
             </button>
           ))}
           <hr />
         </div>
-        <section className="products container text-center justify-content-center">
+       {loading==false?
+       <section className="products container text-center justify-content-center ">
           {data.map((cur) => {
             const base = {
               id: cur.id,
@@ -60,9 +59,9 @@ const Products = () => {
               img: cur.image,
             };
             return (
-              <div className="shadow p-2 mx-2 " key={cur.id}>
+              <div className="shadow cards my-2 p-2 mx-2 " key={cur.id}>
                 <Link
-                  className="cards mx-2 my-2 card"
+                  className=" mx-2 my-2 card"
                   style={{
                     width: "18rem",
                     textDecoration: "none",
@@ -99,12 +98,13 @@ const Products = () => {
               </div>
             );
           })}
-        </section>
+        </section> :
+    <Loading />
+  }
+
       </div>
     );
-  } else {
-    return <Loading />;
-  }
+ 
 };
 
 export default Products;

@@ -12,10 +12,10 @@ const Basketproducts = () => {
     return (
       <div>
         {product.map((cur,ind) => (
-          <div className=" border p-2 my-4" key={ind}>
+          <div className=" border p-2 my-4 shadow" key={ind}>
             <Link className="container  " to={`/${cur.id}`}>
               <div
-                className="cards mb-3  p-4"
+                className=" mb-3  p-4"
                 style={{
                   maxWidth: "540px",
                   overflow: "hidden",

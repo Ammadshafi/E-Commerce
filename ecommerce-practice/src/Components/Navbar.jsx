@@ -1,23 +1,18 @@
-import React from 'react'
+import React,{ useContext } from 'react'
 import {NavLink} from 'react-router-dom';
+import { GlobalContext } from "../App";
 
 const Navbar = () => {
+  const { product } = useContext(GlobalContext);
+  const sup=product.length==0?null:product.length
   return (
    
-<nav className="navbar navbar-expand-lg navbar-light bg-light ">
+<nav className="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div className="container" >
   <NavLink className="navbar-brand fw-bolder" to={"/"}>E-Commerce</NavLink>
   <div className="containers">
-   
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <form className="d-flex my-2">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-dark" type="submit">Search</button>
-      </form>
-    <NavLink className="btn btn-outline-dark my-2 mx-4" to={"/Card"}>Your Card</NavLink>
+    <div className="collapse navbar-collapse" >
+    <NavLink className="fw-bold fs-5 my-2 mx-4" to={"/Card"}><i class="fa-solid fa-cart-shopping"><sup className='shadow mx-2'>{sup}</sup></i></NavLink>
 
     </div>
   </div>
